@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../static/bootstrap/css/bootstrap.min.css">
+        <title>Cinepolis</title>
+        <style>
+        body{
+            background-image: url(https://i1.wp.com/www.lineup.mx/wp-content/uploads/2017/09/Cinepolis.jpg?fit=1664%2C1200&ssl=1);
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: cover;
+            padding-top: 60px; 
+        }
+        label{
+            color: white;
+        }
+        h1{
+            color: white;
+        }
+        .tr-head{background: #1304ec;}
+    </style>
+        <link rel="stylesheet"
+            href="../static/bootstrap/css/bootstrap-responsive.min.css">
+    </head>
+    <body>
+        <h1>Entrada</h1>
+        <div class="container">
+            <div clas="row">
+                <form class="form-horizontal" name="form1"
+                    action="/resultadocinepolis" method="post">
+                    <div class="control-group">
+                        <label for="txtnombre" class="control-label">Nombre</label>
+                        <div class="control">
+                            <input type="text" name="txtnombre"
+                                class="input-xlarge"
+                                placeholder="" value="">
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label for="txtcompradores" class="control-label">Cantidad de compradores</label>
+                        <div class="control">
+                            <input type="text" name="txtcompradores"
+                                class="input-xlarge"
+                                placeholder="" value="">
+                        </div>
+                    </div>
+
+                    <label>Tarjeta Cineco</label> 
+                    <div>   
+                    <input type="radio" id="si" name="cineco" value="si">
+                    <label>SI</label>
+                    <input type="radio" id="no" name="cineco" value="no">
+                    <label>NO</label>
+                    </div>
+
+                    <div class="control-group">
+                        <label for="txtboletos" class="control-label">Cantidad de Boletos</label>
+                        <div class="control">
+                            <input type="text" name="txtboletos"
+                                class="input-xlarge"
+                                placeholder="" value="">
+                        </div>
+
+                    <div class="control-group">
+                        <div class="control">
+                            <button type="submit" class="btn btn-default
+                                btn-primary">
+                                <i class="icon-calculate icon-white"></i>
+                                Procesar
+                            </button>
+                        </div>
+                    </div>
+                </form>
+                    
+              
+                    
+                
+            </div>
+        </div>
+        {% block content %}
+        
+        {% endblock %}
+    </body>
+</html>

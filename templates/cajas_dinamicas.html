@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../static/bootstrap/css/bootstrap.min.css">
+        <title>Cajas dinamicas</title>
+        <style>
+        body{
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: cover;
+            padding-top: 60px; 
+        }
+        label{
+            color: black;
+        }
+        h1{
+            color: black;
+        }
+        .tr-head{background: white;}
+    </style>
+        <link rel="stylesheet"
+            href="../static/bootstrap/css/bootstrap-responsive.min.css">
+    </head>
+    <body>
+        <h1>Cajas dinamicas</h1>
+        <div class="container">
+            <div clas="row">
+                <form class="form-horizontal" name="form1"
+                    action="/Cajas" method="post">
+                    
+                    <div class="control-group">
+                        <label for="txtNumero" class="control-label">Numero</label>
+                        <div class="control">
+                            <input type="number" name="txtNumero"
+                                class="input-xlarge"
+                                placeholder="" value="">
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <div class="control">
+                            <button type="submit" class="btn btn-default 
+                                btn-danger">
+                                <i class="icon-calculate icon-white"></i>
+                                Datos
+                            </button>
+                        </div>
+                    </div>
+                
+                    
+
+                </form>
+
+                <div class="row">
+                    {% from "_macros.html" import render_cajas %}
+                    <form class="form-horizontal" name="form2" action="/CajasResultado" method="post">
+                        <h2>Resultado Cajas Dinámicas</h2>
+                        {% for numero in range(n)%}
+                        <div>{{ render_cajas(name="numeros-" ~ numero) }}</div>
+                            {% endfor %}
+                         
+                            <div class="control-group">
+                                <div class="control">
+                                    <button type="submit" class="btn btn-default btn-danger"> Calcular </button>
+                                </div>
+                            </div>
+                    </form>
+                </div>
+              
+                    
+                
+            </div>
+        </div>
+        {% block content %}
+        
+        {% endblock %}
+    </body>
+</html>
