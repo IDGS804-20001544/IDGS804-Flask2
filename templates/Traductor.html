@@ -1,0 +1,40 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="col-xs-6">
+    {% from "_macros.html"  import render_field%}
+    <form action="" method="post" novalidate>
+        <!--enviamos el token -->
+    
+       
+        {{ render_field(form.español)}}
+        {{ render_field(form.ingles)}}
+            
+
+        <input type="submit" name="al" id="al" value="Guardar">
+    </form>
+</div>
+
+
+<form name="form2" action="/TraductorResult" method="post" >
+<fieldset>
+    <legend>Elige el idioma que deseas traducir </legend>
+    <label>
+        <input type="radio" name="lenguage" value="1"> Español
+    </label>
+    <label>
+        <input type="radio" name="lenguage" value="2"> Inglés
+    </label>
+</fieldset>
+<div class="mb-3 row">
+    <label for="txtPalabra" class="col-sm-2 col-form-label">PALABRA: </label>
+    <div class="col-sm-10">
+        <input type="text" name="txtPalabra" class="input-xlarge"
+               placeholder="" value="">
+    </div>
+<input type="submit" name="al" id="al" value="Traducir">
+</form>
+
+
+
+
+{% endblock%}
