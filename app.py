@@ -2,10 +2,13 @@ from flask import Flask,render_template,request
 import forms
 import Traductorforms
 import cajas_dinamicas
+import Resistencias
 from flask_wtf.csrf import CSRFProtect
 from flask import make_response
 from flask import flash
 from flask_wtf import FlaskForm
+import json
+from flask import redirect
 
 
 app=Flask(__name__)
@@ -51,10 +54,73 @@ def cajas():
     n= int(numerocajas or 0)
     return render_template('cajas_dinamicas.html', numerocajas = numerocajas, numero = numero, n = n)
 
+
+colores = [
+    "negro",
+    "cafe",
+    "rojo",
+    "naranja",
+    "amarillo",
+    "verde",
+    "azul",
+    "morado",
+    "gris",
+    "blanco",
+]
+
+color = ["oro", "plata"]
+
+def calculate(bands):
+    result = float(
+        f"{colores.index(bands['ban1'])}{colores.index(bands['ban2'])}"
+    ) * float(f"1{colores.index(bands['ban3']) * '0'}")
+    min = result - (result * float(bands["tolerancia"]))
+    max = result + (result * float(bands["tolerancia"]))
+    return (
+        bands["ban1"],
+        bands["ban2"],
+        bands["ban3"],
+        bands["tolerancia"],
+        result,
+        min,
+        max,
+    )
+
+@app.route("/Resistencia",methods=['POST', 'GET'])
+def res():
+     form = Resistencias.ResForm(request.form)
+     filename = "resistencia.json"
+
+     with open(filename, "r") as f:
+        dataTemp = json.load(f)
+
+     datos = [calculate(row) for row in dataTemp] if dataTemp != "" else False
+
+     if request.method == "POST" and form.validate():
+        banda1 = request.form.get("banda1")
+        banda2 = request.form.get("banda2")
+        banda3 = request.form.get("banda3")
+        tolerancia = request.form.get("tolerancia")
+
+        jsonObj = {
+            "ban1": colores[int(banda1)],
+            "ban2": colores[int(banda2)],
+            "ban3": colores[len(banda3) - 1],
+            "tolerancia": tolerancia,
+        }
+
+        with open(filename, "w") as f:
+            json.dump([jsonObj, *dataTemp], f)
+
+        return redirect("/Resistencia")
+    
+     return render_template('Resistencias.html', form=form,datos=datos)
+ 
+ 
+
 @app.route("/Traductor",methods=['POST', 'GET'])
 def Traductor():
     reg_traduc=Traductorforms.Traduform(request.form)
-    reg_traducido=Traductorforms.Traducidoform(request.form)
 
     datos=list()
     lenguage=request.form.get('lenguage')
@@ -68,7 +134,7 @@ def Traductor():
         
             
                     
-    return render_template('Traductor.html',form=reg_traduc,datos=datos,form2=reg_traducido)
+    return render_template('Traductor.html',form=reg_traduc,datos=datos)
 
 @app.route("/TraductorResult",methods=['POST', 'GET'])
 def TraductorResult():
@@ -116,6 +182,6 @@ def cajas2():
 
      
 if __name__ == "__main__":
-     #csrf.init_app(app)
+     csrf.init_app(app)
      app.run(debug=True)   
      

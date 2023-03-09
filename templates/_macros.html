@@ -28,6 +28,19 @@
 
 {% endmacro %}
 
+{% macro tabla(ban1, ban2, ban3, tolerancia, valor, valorMin, valorMax) %}
+<tr>
+    <td class="{{ ban1 }}">{{ ban1 }}</td>
+    <td class="{{ ban2 }}">{{ ban2 }}</td>
+    <td class="{{ ban3 }}">{{ ban3 }}</td>
+    <td>{{ tolerancia }}</td>
+    <td>{{ valor }}</td>
+    <td>{{ valorMin }}</td>
+    <td>{{ valorMax }}</td>
+</tr>
+
+{% endmacro %}
+
 {% macro render_field(field)%}
 <div class="control-group">
     <div class="controls">
